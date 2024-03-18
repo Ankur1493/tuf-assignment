@@ -27,7 +27,25 @@ const createSubmission = async (req, res) => {
 };
 
 const getAllSubmissions = async (_, res) => {
-  res.status(200).json({ message: "here are all your submissions" });
+
+  try {
+    const submissions = await prisma.submission.findMany({ orderBy: { submittedAt: "desc" } });
+
+    if (submissions.length === 0) {
+      return res.status(200).json({
+        message: "You are the first one here"
+      })
+    }
+
+    return res.status(200).json({
+      message: "here's your submissions",
+      submissions
+    })
+
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+
 }
 
 export { createSubmission, getAllSubmissions }
