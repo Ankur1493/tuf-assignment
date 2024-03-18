@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Submission {
-  id             Int      @id @default(uuid())
+  id             String      @id @default(uuid())
   username       String
   codeLanguage   String
   stdin          String
