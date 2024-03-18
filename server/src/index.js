@@ -2,16 +2,15 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import prisma from "../db.js";
-
+import { getAllSubmissions, createSubmission } from "./submissionControllers.js";
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 
-app.get("/", (_, res) => {
-  res.send("Hello Take U Forward");
-})
+app.get("/submission", getAllSubmissions);
+app.post("/submission", createSubmission);
 
 const startServer = async () => {
   try {
