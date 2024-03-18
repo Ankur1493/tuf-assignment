@@ -12,6 +12,13 @@ const createSubmission = async (req, res) => {
         stdin,
         sourceCode,
       },
+      select: {
+        username: true,
+        codeLanguage: true,
+        stdin: true,
+        sourceCode: true,
+        submittedAt: true,
+      }
     });
 
     if (!submission) throw new Error("try again later, this was our fault")
@@ -29,7 +36,16 @@ const createSubmission = async (req, res) => {
 const getAllSubmissions = async (_, res) => {
 
   try {
-    const submissions = await prisma.submission.findMany({ orderBy: { submittedAt: "desc" } });
+    const submissions = await prisma.submission.findMany({
+      orderBy: { submittedAt: "desc" },
+      select: {
+        username: true,
+        codeLanguage: true,
+        stdin: true,
+        sourceCode: true,
+        submittedAt: true,
+      }
+    });
 
     if (submissions.length === 0) {
       return res.status(200).json({
